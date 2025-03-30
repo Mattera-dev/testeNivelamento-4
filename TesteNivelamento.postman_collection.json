@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "e8f8ce5a-412e-4a8f-b722-dfdaac9449cc",
+		"name": "TesteNivelamento",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32647618"
+	},
+	"item": [
+		{
+			"name": "GET '/search' without query Params",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:5000/search"
+			},
+			"response": []
+		},
+		{
+			"name": "GET '/search' with name param",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/search?s=unimed",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "s",
+							"value": "unimed"
+						}
+					]
+				},
+				"description": "param \"s\" is the name searching, the text passed in this param is used do search names in API."
+			},
+			"response": []
+		},
+		{
+			"name": "GET '/search' with name and page params",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/search?s=unimed&page=2",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "s",
+							"value": "unimed"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				},
+				"description": "param \"s\" is the name searching, the text passed in this param is used do search names in API  \nparam \"page\" is the number of page returned, each page has 20 results."
+			},
+			"response": []
+		},
+		{
+			"name": "GET '/search' with name and page, but page is invalid",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/search?s=unimed&page=a",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "s",
+							"value": "unimed"
+						},
+						{
+							"key": "page",
+							"value": "a"
+						}
+					]
+				},
+				"description": "param \"s\" is the name searching, the text passed in this param is used do search names in API  \nparam \"page\" is the number of page returned, each page has 20 results.\n\n  \nif the page is invalid, automatically the API returns first page"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "test",
+			"script": {
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {\r",
+					"    pm.response.to.have.status(200);\r",
+					"});\r",
+					"pm.test(\"Return 20 results\", function () {\r",
+					"    var jsonData = pm.response.json();\r",
+					"    pm.expect(jsonData.length).to.be.gt(1).lte(20);\r",
+					"});"
+				],
+				"type": "text/javascript"
+			}
+		}
+	]
+}
